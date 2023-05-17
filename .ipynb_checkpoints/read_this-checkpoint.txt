@@ -1,0 +1,19 @@
+from io import BytesIO
+from flask import Flask, Response
+import matplotlib.pyplot as plt
+
+app = Flask(__name__)
+
+def plot():
+    fig, ax = plt.subplots()
+    ax.plot([1, 2, 3], [4, 5, 6])
+    
+    # Save the figure to a buffer
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    
+    # Return the buffer as a PNG image
+    return Response(buffer.read(), mimetype='image/png')
+    
+Dalam contoh di atas, fungsi plot() akan menghasilkan gambar matplotlib dan mengembalikannya sebagai PNG image yang dapat digunakan di HTML. Anda dapat mengakses gambar tersebut dengan melakukan permintaan ke rute /plot.png.
